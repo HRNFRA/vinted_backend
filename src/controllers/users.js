@@ -1,4 +1,5 @@
 const userModel = require("../models/user");
+const env = require("../utils/validateEnv");
 const createHttpError = require("http-errors");
 const SHA256 = require("crypto-js/sha256");
 const encBase64 = require("crypto-js/enc-base64");
@@ -7,9 +8,9 @@ const cloudinary = require("cloudinary").v2;
 const {convertToBase64} = require("../utils/convertToBase64");
 
 cloudinary.config({ 
-  cloud_name: 'dgx05gt6o', 
-  api_key: '368233136266718', 
-  api_secret: 'krHJxxMLgLpKnntWoA0LuJUYyfk' 
+  cloud_name: env.CLOUDINARY_NAME, 
+  api_key: env.CLOUDINARY_API_KEY, 
+  api_secret: env.CLOUDINARY_API_KEY
 })
 
 const signUp = async (req, res, next) => {

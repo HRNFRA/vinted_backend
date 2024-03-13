@@ -1,13 +1,14 @@
 const offerModel = require("../models/offer");
 const mongoose = require("mongoose");
+const env = require('../utils/validateEnv');
 const createHttpError = require("http-errors");
 const cloudinary = require("cloudinary").v2
 const {convertToBase64} = require("../utils/convertToBase64");
 
 cloudinary.config({ 
-    cloud_name: 'dgx05gt6o', 
-    api_key: '368233136266718', 
-    api_secret: 'krHJxxMLgLpKnntWoA0LuJUYyfk' 
+    cloud_name: env.CLOUDINARY_NAME, 
+    api_key: env.CLOUDINARY_API_KEY, 
+    api_secret: env.CLOUDINARY_API_SECRET 
 })
 
 const getOffers = async (req, res, next) => {
@@ -163,7 +164,7 @@ const publishOffer = async (req, res, next) => {
     }
 
     await newOffer.save();
-    res.status(201).json({message: `Offer ${newOffer.product_name} created by ${req.user.account.username}`});
+    res.status(201).json(newOffer);
   } catch (error) {
     next(error)
   }
@@ -225,7 +226,7 @@ const modifyOffer = async (req, res, next) => {
         offer.product_pictures[0] = newPictureToUpload
         
         await offer.save()
-        res.status(200).json({message: `Offer ${offer.product_name} modified by ${req.user.account.username}`})
+        res.status(200).json({message: `Offer ${offer.product_name} modified succesfully by ${req.user.account.username}`})
     } catch (error) {
         next(error)
     }
@@ -252,7 +253,7 @@ const deleteOffer = async (req, res, next) => {
         await cloudinary.api.delete_folder(`vinted/offers/${offerId}`) // Delete the offer folder
 
         await offerModel.findByIdAndDelete(offerId).exec()
-        res.status(204).json({message: `Offer ${offer.product_name} deleted by ${req.user.account.username}`})
+        res.status(204).json({message: `Offer ${offer.product_name} deleted successfully by ${req.user.account.username}`})
     } catch (error) {
         next(error)
     }
