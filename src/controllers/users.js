@@ -15,7 +15,7 @@ cloudinary.config({
 
 const signUp = async (req, res, next) => {
   const { username, email, password, newsletter } = req.body
-  const avatarToUpload = req.files.avatar
+  // const avatarToUpload = req.files.avatar
 
   const salt = uid2(16)
   const hash = SHA256(password + salt).toString(encBase64)
@@ -41,17 +41,17 @@ const signUp = async (req, res, next) => {
       throw createHttpError(409, "Email already taken");
     }
 
-    const avatar = await cloudinary.uploader.upload(convertToBase64(avatarToUpload), {
-        folder: `vinted/users/${email}`,
-    })
+    // const avatar = await cloudinary.uploader.upload(convertToBase64(avatarToUpload), {
+    //     folder: `vinted/users/${email}`,
+    // })
 
     const newUser = new userModel({
       email: email,
       account: {
         username: username,
-        avatar: {
-          secure_url: avatar.secure_url,
-        }
+        // avatar: {
+        //   secure_url: avatar.secure_url,
+        // }
       },
       newsletter: newsletter,
       token: token,
