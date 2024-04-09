@@ -10,10 +10,12 @@ const app = express();
 
 // Middlewares
 app.use(morgan("dev"));
-app.use(express.json());
 
 // CORS
 app.use(cors())
+
+// Body parser
+app.use(express.json());
 
 // Routes
 app.use("/user", userRoutes);
