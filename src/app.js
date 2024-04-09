@@ -18,6 +18,9 @@ app.use(cors())
 app.use(express.json());
 
 // Routes
+app.get("/", (req, res) => {
+  res.json({ message: "Hello Vinted API" });
+}
 app.use("/user", userRoutes);
 app.use("/offer", offerRoutes);
 
