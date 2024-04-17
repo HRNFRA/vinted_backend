@@ -21,8 +21,9 @@ app.use(morgan("dev"));
 // Body parser
 app.use(express.json());
 
+// Log requests
 app.use((req, res, next) => {
-  console.log(`Received request: ${req.method} ${req.url}`);
+  console.log(`Received request: ${req.method} ${req.url} | Response status: ${res.statusCode} ${res.statusMessage}`);
   next();
 });
 
